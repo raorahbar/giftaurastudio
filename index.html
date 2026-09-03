@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Giftaurastudio | Shop • Discover • Gift</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;color:#171717;background:#fff}
+:root{--gold:#bd8b3f;--black:#111;--line:#e8e8e8;--soft:#faf7f1}
+button,input,select,textarea{font:inherit}button{cursor:pointer}.top{background:#111;color:#fff;padding:9px 4%;display:flex;justify-content:space-between;font-size:13px}
+.header{padding:18px 4%;display:flex;gap:25px;align-items:center;border-bottom:1px solid var(--line)}.brand{min-width:250px}.brand b{font-size:26px}.brand small{display:block;letter-spacing:3px;margin-top:5px}
+.search{height:46px;border:1px solid #ddd;border-radius:28px;display:flex;flex:1;overflow:hidden}.search input{border:0;outline:0;padding:0 18px;flex:1}.search button{width:60px;background:#111;color:#fff;border:0}
+.nav{display:flex;gap:25px;padding:12px 4%;border-bottom:1px solid var(--line);align-items:center;overflow:auto;white-space:nowrap}.nav a{font-size:14px}.catbtn{background:#111;color:#fff;padding:12px 18px;border-radius:5px;border:0}
+.hero{margin:10px auto;max-width:1450px;border-radius:12px;min-height:360px;padding:55px 7%;background:linear-gradient(90deg,#faf7f1,#eee7dc);position:relative;overflow:hidden}.hero:after{content:"";position:absolute;right:0;top:0;width:52%;height:100%;background:linear-gradient(90deg,transparent,#d8cfc1);opacity:.8}.hero>*{position:relative;z-index:2}.badge{background:var(--gold);color:#fff;padding:8px 13px;border-radius:4px;font-size:11px}.hero h1{font:58px Georgia,serif;line-height:.98;margin:18px 0}.hero h1 span{color:var(--gold)}.hero p{font-size:17px}.btn{display:inline-block;background:#111;color:#fff;padding:14px 20px;border-radius:4px;border:0;font-weight:bold;margin-top:12px}
+.features{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:0 4% 20px}.feature{border:1px solid var(--line);padding:16px;border-radius:8px}.feature b{display:block;font-size:13px}.feature small{color:#777}
+.section{padding:18px 4%}.section h2{font:28px Georgia,serif}.cats{display:grid;grid-template-columns:repeat(9,1fr);gap:14px}.circle{background:#f1eee8;border-radius:50%;aspect-ratio:1;display:grid;place-items:center;text-align:center;font-size:13px;padding:10px}
+.head{display:flex;justify-content:space-between;align-items:center}.products{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}.card{border:1px solid var(--line);border-radius:8px;overflow:hidden}.photo{height:180px;background:#f3f1ed center/cover no-repeat}.info{padding:10px}.info h3{font-size:13px;margin:0 0 7px}.price{font-weight:bold}.old{text-decoration:line-through;color:#999;font-size:11px;margin-left:5px}.off{color:#d6652e;font-size:11px;margin-left:4px}.card .wa{margin-top:9px;width:100%;border:1px solid #ccc;background:#fff;padding:8px;border-radius:4px;font-size:11px}
+.promo{margin:18px 4%;padding:30px 5%;background:#17130f;color:#fff;border-radius:8px;display:flex;justify-content:space-between;align-items:center}.promo h2{font:34px Georgia,serif;color:#d6a04f;margin:6px 0}.promo .btn{background:var(--gold)}
+.contact{padding:40px 4%;background:var(--soft);display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:30px}.contact p,.contact li{font-size:13px;color:#555;line-height:1.7}.contact ul{list-style:none;padding:0}.footer{background:#111;color:#fff;padding:15px 4%;display:flex;justify-content:space-between;font-size:12px}
+.floating{position:fixed;right:20px;bottom:20px;background:#20c76a;color:#fff;width:55px;height:55px;border-radius:50%;display:grid;place-items:center;font-size:25px;z-index:10}
+.admin{display:none;position:fixed;inset:0;background:#f5f5f5;z-index:30;overflow:auto}.admin.active{display:block}.adminbar{background:#111;color:#fff;padding:15px 4%;display:flex;justify-content:space-between;align-items:center}.adminmain{padding:25px 4%;max-width:1200px;margin:auto}.adminbar button,.close{border:0;background:#fff;padding:9px 14px;border-radius:4px}.add{background:#bd8b3f!important;color:#fff!important}.admincard{background:#fff;border:1px solid #ddd;border-radius:8px;padding:18px;margin-bottom:15px}.adminlist{display:grid;gap:10px}.row{display:flex;align-items:center;gap:12px;border:1px solid #eee;padding:10px;border-radius:6px}.thumb{width:70px;height:55px;object-fit:cover;background:#eee}.row .grow{flex:1}.edit,.delete{border:0;padding:8px 12px;border-radius:4px}.edit{background:#eee}.delete{background:#111;color:#fff}
+.modal{display:none;position:fixed;inset:0;background:#0008;z-index:50;align-items:center;justify-content:center;padding:15px}.modal.active{display:flex}.box{background:#fff;width:min(600px,100%);max-height:90vh;overflow:auto;border-radius:10px;padding:22px}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{display:flex;flex-direction:column;gap:5px}.field.full{grid-column:1/-1}.field input,.field select,.field textarea{border:1px solid #ccc;border-radius:5px;padding:10px}.preview{width:100px;height:80px;object-fit:cover;margin-top:8px}.actions{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}.actions button{padding:10px 16px;border:0;border-radius:5px}.save{background:#111;color:#fff}
+@media(max-width:900px){.products{grid-template-columns:repeat(3,1fr)}.cats{grid-template-columns:repeat(5,1fr)}.features{grid-template-columns:repeat(2,1fr)}.contact{grid-template-columns:1fr 1fr}.hero h1{font-size:45px}}
+@media(max-width:600px){.top{font-size:10px}.header{flex-wrap:wrap}.brand{width:100%}.products{grid-template-columns:repeat(2,1fr)}.photo{height:150px}.cats{grid-template-columns:repeat(3,1fr)}.features{grid-template-columns:1fr 1fr}.hero{min-height:420px;padding:38px 7%}.hero h1{font-size:43px}.promo{display:block}.contact{grid-template-columns:1fr}.footer{display:block;line-height:2}.formgrid{grid-template-columns:1fr}.field.full{grid-column:auto}}
+</style>
+</head>
+<body>
+<div class="top"><span>✨ Premium Furniture, Office Essentials & More — All in One Place!</span><span>📍 Haridwar, Uttarakhand</span></div>
+<header class="header">
+ <div class="brand"><b>🎁 GIFTAURASTUDIO</b><small>SHOP • DISCOVER • GIFT</small></div>
+ <div class="search"><input id="search" placeholder="Search for products, categories or brands..."><button>⌕</button></div>
+</header>
+<nav class="nav"><button class="catbtn">☰ ALL CATEGORIES</button><a href="#home">Home</a><a href="#products">Furniture</a><a href="#products">Office Furniture</a><a href="#products">Spare Parts</a><a href="#products">Home Decor</a><a href="#products">Gifts</a><a href="#products">New Arrivals</a><a href="#products">Offers</a><a href="#contact">Contact Us</a></nav>
+
+<section class="hero" id="home"><span class="badge">NEW COLLECTION</span><h1>Beautiful Spaces<br><span>Start Here</span></h1><p>Quality products for every home & office.</p><p>✧ Stylish Designs &nbsp; ◉ Premium Quality &nbsp; ◉ Best Prices</p><a class="btn" href="#products">EXPLORE COLLECTION →</a></section>
+<section class="features"><div class="feature">🚚 <b>FREE DELIVERY</b><small>On selected orders</small></div><div class="feature">♢ <b>PREMIUM QUALITY</b><small>Best quality products</small></div><div class="feature">↩ <b>EASY RETURNS</b><small>7 days return policy</small></div><div class="feature">♧ <b>CUSTOMER SUPPORT</b><small>WhatsApp support</small></div></section>
+
+<section class="section"><div class="head"><h2>Shop by Category</h2></div><div class="cats">
+<div class="circle">🛏️<br>Beds</div><div class="circle">🛋️<br>Sofas</div><div class="circle">🚪<br>Almirah</div><div class="circle">🪞<br>Dressing Tables</div><div class="circle">🛏️<br>Mattresses</div><div class="circle">🪑<br>Office Furniture</div><div class="circle">🔧<br>Spare Parts</div><div class="circle">🌿<br>Home Decor</div><div class="circle">•••<br>More</div>
+</div></section>
+
+<section class="section" id="products"><div class="head"><h2>Top Picks For You</h2><button class="btn" style="margin:0" onclick="openAdmin()">⚙ Manage Products</button></div><div class="products" id="grid"></div></section>
+<div class="promo"><div>Special Offer<h2>UPTO 30% OFF</h2>On Selected Products</div><a class="btn" href="#products">SHOP NOW</a></div>
+<section class="contact" id="contact"><div><h2>GIFTAURASTUDIO</h2><small>SHOP • DISCOVER • GIFT</small><p>Your one-stop destination for premium furniture, office essentials, home decor, spare parts and unique gifts.</p></div><div><h3>QUICK LINKS</h3><ul><li>Home</li><li>All Products</li><li>New Arrivals</li><li>Offers</li><li>Contact Us</li></ul></div><div><h3>CATEGORIES</h3><ul><li>Furniture</li><li>Office Furniture</li><li>Spare Parts</li><li>Home Decor</li><li>Gifts</li></ul></div><div><h3>CONTACT US</h3><p>📍 Haridwar, Uttarakhand</p><p>💬 8936930878</p><p>🕒 Mon–Sun | 10 AM – 8 PM</p></div></section>
+<div class="footer">© 2026 Giftaurastudio. All Rights Reserved.</div>
+<a class="floating" href="https://wa.me/918936930878" target="_blank">☏</a>
+
+<div class="admin" id="admin">
+ <div class="adminbar"><b>GIFTAURASTUDIO — PRODUCT MANAGER</b><div><button class="add" onclick="newProduct()">＋ Add Product</button> <button onclick="closeAdmin()">Close</button></div></div>
+ <div class="adminmain"><div class="admincard"><b>How to use:</b> Add your product photo, name, category, price and description. Changes are saved in this browser automatically.</div>
+ <div class="admincard"><div class="head"><h2>Products</h2><span id="count"></span></div><div class="adminlist" id="adminList"></div></div></div>
+</div>
+
+<div class="modal" id="modal"><div class="box"><div class="head"><h2 id="modalTitle">Add Product</h2><button class="close" onclick="closeModal()">✕</button></div>
+<form id="form"><input type="hidden" id="pid"><div class="formgrid">
+<div class="field full"><label>Product photo</label><input id="image" type="file" accept="image/*"><img id="preview" class="preview" style="display:none"></div>
+<div class="field"><label>Product name *</label><input id="name" required placeholder="e.g. Wooden King Size Bed"></div>
+<div class="field"><label>Category *</label><select id="cat"><option>Furniture</option><option>Office Furniture</option><option>Spare Parts</option><option>Home Decor</option><option>Gifts</option><option>Mattresses</option></select></div>
+<div class="field"><label>Selling price ₹ *</label><input id="price" type="number" required></div>
+<div class="field"><label>MRP ₹</label><input id="old" type="number"></div>
+<div class="field full"><label>Description</label><textarea id="desc" rows="3" placeholder="Product details..."></textarea></div>
+</div><div class="actions"><button type="button" onclick="closeModal()">Cancel</button><button class="save">Save Product</button></div></form>
+</div></div>
+
+<script>
+const KEY='giftaurastudio_products_v1';
+const defaults=[
+{name:'Wooden King Size Bed',price:24999,old:32999,cat:'Furniture',desc:'Premium wooden king size bed.',img:'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=800&q=80'},
+{name:'Luxury Fabric Sofa',price:29999,old:42999,cat:'Furniture',desc:'Comfortable luxury fabric sofa.',img:'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=800&q=80'},
+{name:'3 Door Wooden Almirah',price:15999,old:22999,cat:'Furniture',desc:'Spacious 3 door wooden almirah.',img:'https://images.unsplash.com/photo-1595428774223-ef52624120d2?auto=format&fit=crop&w=800&q=80'},
+{name:'Ergonomic Office Chair',price:6999,old:9999,cat:'Office Furniture',desc:'Comfortable office chair.',img:'https://images.unsplash.com/photo-1580480055273-228ff5388ef8?auto=format&fit=crop&w=800&q=80'},
+{name:'Orthopedic Mattress',price:8999,old:12999,cat:'Mattresses',desc:'Comfortable orthopedic mattress.',img:'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=800&q=80'},
+{name:'Decorative Cushion',price:499,old:799,cat:'Home Decor',desc:'Decorative cushion for home.',img:'https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=800&q=80'}
+].map((p,i)=>({...p,id:Date.now()+i}));
+
+let products=JSON.parse(localStorage.getItem(KEY)||'null')||defaults;
+function save(){localStorage.setItem(KEY,JSON.stringify(products))}
+function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function render(){
+ const q=(document.getElementById('search').value||'').toLowerCase();
+ const list=products.filter(p=>(p.name+' '+p.cat+' '+(p.desc||'')).toLowerCase().includes(q));
+ document.getElementById('grid').innerHTML=list.map(p=>{
+  const off=p.old?Math.max(0,Math.round((1-p.price/p.old)*100)):0;
+  return `<article class="card"><div class="photo" style="background-image:url('${p.img}')"></div><div class="info"><h3>${esc(p.name)}</h3><span class="price">₹${Number(p.price).toLocaleString('en-IN')}</span>${p.old?` <span class="old">₹${Number(p.old).toLocaleString('en-IN')}</span>`:''}${off?`<span class="off">${off}% OFF</span>`:''}<button class="wa" onclick="enquire(${p.id})">Enquire on WhatsApp</button></div></article>`
+ }).join('')||'<p>No products found.</p>';
+}
+function enquire(id){let p=products.find(x=>x.id===id);window.open('https://wa.me/918936930878?text='+encodeURIComponent('Hello Giftaurastudio, I am interested in: '+p.name),'_blank')}
+function openAdmin(){document.getElementById('admin').classList.add('active');renderAdmin()}
+function closeAdmin(){document.getElementById('admin').classList.remove('active')}
+function renderAdmin(){document.getElementById('count').textContent=products.length+' products';document.getElementById('adminList').innerHTML=products.map(p=>`<div class="row"><img class="thumb" src="${p.img}"><div class="grow"><b>${esc(p.name)}</b><br><small>${esc(p.cat)} • ₹${Number(p.price).toLocaleString('en-IN')}</small></div><button class="edit" onclick="editProduct(${p.id})">Edit</button><button class="delete" onclick="deleteProduct(${p.id})">Delete</button></div>`).join('')}
+function newProduct(){document.getElementById('form').reset();document.getElementById('pid').value='';document.getElementById('preview').style.display='none';document.getElementById('modalTitle').textContent='Add Product';document.getElementById('modal').classList.add('active')}
+function editProduct(id){let p=products.find(x=>x.id===id);document.getElementById('pid').value=p.id;document.getElementById('name').value=p.name;document.getElementById('cat').value=p.cat;document.getElementById('price').value=p.price;document.getElementById('old').value=p.old||'';document.getElementById('desc').value=p.desc||'';let pr=document.getElementById('preview');pr.src=p.img;pr.style.display='block';document.getElementById('image').value='';document.getElementById('modalTitle').textContent='Edit Product';document.getElementById('modal').classList.add('active')}
+function closeModal(){document.getElementById('modal').classList.remove('active')}
+function deleteProduct(id){if(confirm('Delete this product?')){products=products.filter(p=>p.id!==id);save();render();renderAdmin()}}
+document.getElementById('image').addEventListener('change',e=>{let f=e.target.files[0];if(f){let r=new FileReader();r.onload=()=>{let p=document.getElementById('preview');p.src=r.result;p.style.display='block'};r.readAsDataURL(f)}})
+document.getElementById('form').addEventListener('submit',e=>{e.preventDefault();let id=Number(document.getElementById('pid').value);let oldp=products.find(p=>p.id===id);let image=oldp?.img||'https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=800&q=80';let file=document.getElementById('image').files[0];const finish=(img)=>{let p={id:id||Date.now(),name:document.getElementById('name').value,cat:document.getElementById('cat').value,price:Number(document.getElementById('price').value),old:Number(document.getElementById('old').value)||0,desc:document.getElementById('desc').value,img};if(id)products=products.map(x=>x.id===id?p:x);else products.push(p);save();render();renderAdmin();closeModal()};if(file){let r=new FileReader();r.onload=()=>finish(r.result);r.readAsDataURL(file)}else finish(image)})
+document.getElementById('search').addEventListener('input',render);render();
+</script>
+</body></html>
