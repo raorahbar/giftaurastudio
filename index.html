@@ -22,8 +22,6 @@ button,input,select,textarea{font:inherit}button{cursor:pointer}.top{background:
 .modal{display:none;position:fixed;inset:0;background:#0008;z-index:50;align-items:center;justify-content:center;padding:15px}.modal.active{display:flex}.box{background:#fff;width:min(600px,100%);max-height:90vh;overflow:auto;border-radius:10px;padding:22px}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{display:flex;flex-direction:column;gap:5px}.field.full{grid-column:1/-1}.field input,.field select,.field textarea{border:1px solid #ccc;border-radius:5px;padding:10px}.preview{width:100px;height:80px;object-fit:cover;margin-top:8px}.actions{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}.actions button{padding:10px 16px;border:0;border-radius:5px}.save{background:#111;color:#fff}
 @media(max-width:900px){.products{grid-template-columns:repeat(3,1fr)}.cats{grid-template-columns:repeat(5,1fr)}.features{grid-template-columns:repeat(2,1fr)}.contact{grid-template-columns:1fr 1fr}.hero h1{font-size:45px}}
 @media(max-width:600px){.top{font-size:10px}.header{flex-wrap:wrap}.brand{width:100%}.products{grid-template-columns:repeat(2,1fr)}.photo{height:150px}.cats{grid-template-columns:repeat(3,1fr)}.features{grid-template-columns:1fr 1fr}.hero{min-height:420px;padding:38px 7%}.hero h1{font-size:43px}.promo{display:block}.contact{grid-template-columns:1fr}.footer{display:block;line-height:2}.formgrid{grid-template-columns:1fr}.field.full{grid-column:auto}}
-
-.cart-fab{position:fixed;right:18px;bottom:18px;z-index:1000;border:0;border-radius:999px;padding:13px 18px;background:#111;color:#fff;font-weight:800;box-shadow:0 8px 25px #0003}.cart-count{display:inline-flex;min-width:22px;height:22px;align-items:center;justify-content:center;border-radius:50%;background:#fff;color:#111;margin-left:6px}.cart-overlay{display:none;position:fixed;inset:0;background:#0007;z-index:2000;align-items:flex-end;justify-content:center}.cart-overlay.open{display:flex}.cart-panel{background:#fff;width:min(680px,100%);max-height:92vh;overflow:auto;border-radius:22px 22px 0 0;padding:20px}.cart-head{display:flex;justify-content:space-between;align-items:center}.cart-head button{border:0;background:#eee;border-radius:8px;padding:8px 12px}.cart-item{display:flex;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid #eee}.cart-item img{width:72px;height:72px;object-fit:cover;border-radius:10px}.cart-item-info{flex:1}.qty{display:flex;align-items:center;gap:8px;margin-top:7px}.qty button{border:0;background:#eee;border-radius:7px;min-width:30px;height:30px}.checkout input,.checkout textarea{width:100%;box-sizing:border-box;padding:11px;border:1px solid #ddd;border-radius:10px;margin:5px 0 9px}.order-btn{width:100%;border:0;background:#25d366;color:#fff;border-radius:12px;padding:14px;font-weight:900}.add-cart{width:100%;margin-top:9px;border:0;border-radius:8px;padding:10px;background:#111;color:#fff;font-weight:800}
 </style>
 </head>
 <body>
@@ -44,11 +42,11 @@ button,input,select,textarea{font:inherit}button{cursor:pointer}.top{background:
 <section class="section" id="products"><div class="head"><h2>Top Picks For You</h2></div><div class="products" id="grid"></div></section>
 <div class="promo"><div>Special Offer<h2>UPTO 30% OFF</h2>On Selected Products</div><a class="btn" href="#products">SHOP NOW</a></div>
 <section class="contact" id="contact"><div><h2>GIFTAURASTUDIO</h2><small>SHOP • DISCOVER • GIFT</small><p>Your one-stop destination for premium furniture, office essentials, home decor, spare parts and unique gifts.</p></div><div><h3>QUICK LINKS</h3><ul><li>Home</li><li>All Products</li><li>New Arrivals</li><li>Offers</li><li>Contact Us</li></ul></div><div><h3>CATEGORIES</h3><ul><li>Furniture</li><li>Office Furniture</li><li>Spare Parts</li><li>Home Decor</li><li>Gifts</li></ul></div><div><h3>CONTACT US</h3><p>📍 Haridwar, Uttarakhand</p><p>💬 8936930878</p><p>🕒 Mon–Sun | 10 AM – 8 PM</p></div></section>
-<div class="footer">© 2026 Giftaurastudio. All Rights Reserved. <button type="button" onclick="openAdmin()" style="border:0;background:transparent;color:inherit;text-decoration:underline;cursor:pointer;font-size:12px">🔐 Admin Login</button></div>
+<div class="footer">© 2026 Giftaurastudio. All Rights Reserved. <button type="button" onclick="openAdmin()" style="border:0;background:transparent;color:#fff;text-decoration:underline;cursor:pointer;font-size:11px">🔐 Admin Login</button></div>
 <a class="floating" href="https://wa.me/918936930878" target="_blank">☏</a>
 
 <div class="admin" id="admin">
- <div class="adminbar"><b>GIFTAURASTUDIO — PRODUCT MANAGER</b><div><button class="add" onclick="newProduct()">＋ Add Product</button> <button onclick="adminLogout()">Logout</button></div></div>
+ <div class="adminbar"><b>GIFTAURASTUDIO — PRODUCT MANAGER</b><div><button class="add" onclick="newProduct()">＋ Add Product</button> <button onclick="closeAdmin()">Close</button></div></div>
  <div class="adminmain"><div class="admincard"><b>How to use:</b> Add your product photo, name, category, price and description. Changes are saved in this browser automatically.</div>
  <div class="admincard"><div class="head"><h2>Products</h2><span id="count"></span></div><div class="adminlist" id="adminList"></div></div></div>
 </div>
@@ -83,31 +81,19 @@ function render(){
  const list=products.filter(p=>(p.name+' '+p.cat+' '+(p.desc||'')).toLowerCase().includes(q));
  document.getElementById('grid').innerHTML=list.map(p=>{
   const off=p.old?Math.max(0,Math.round((1-p.price/p.old)*100)):0;
-  return `<article class="card"><div class="photo" style="background-image:url('${p.img}')"></div><div class="info"><h3>${esc(p.name)}</h3><span class="price">₹${Number(p.price).toLocaleString('en-IN')}</span>${p.old?` <span class="old">₹${Number(p.old).toLocaleString('en-IN')}</span>`:''}${off?`<span class="off">${off}% OFF</span>`:''}<button class="add-cart" onclick="addToCart(${p.id})">🛒 Add to Cart</button><button class="wa" onclick="enquire(${p.id})">Enquire on WhatsApp</button></div></article>`
+  return `<article class="card"><div class="photo" style="background-image:url('${p.img}')"></div><div class="info"><h3>${esc(p.name)}</h3><span class="price">₹${Number(p.price).toLocaleString('en-IN')}</span>${p.old?` <span class="old">₹${Number(p.old).toLocaleString('en-IN')}</span>`:''}${off?`<span class="off">${off}% OFF</span>`:''}<button class="wa" onclick="enquire(${p.id})">Enquire on WhatsApp</button></div></article>`
  }).join('')||'<p>No products found.</p>';
 }
 function enquire(id){let p=products.find(x=>x.id===id);window.open('https://wa.me/918936930878?text='+encodeURIComponent('Hello Giftaurastudio, I am interested in: '+p.name),'_blank')}
 function openAdmin(){
-  document.getElementById('adminLogin').style.display='flex';
-  document.getElementById('adminPass').value='';
-  document.getElementById('adminLoginError').textContent='';
-  setTimeout(()=>document.getElementById('adminPass').focus(),50);
-}
-function closeAdminLogin(){document.getElementById('adminLogin').style.display='none'}
-function adminLogin(){
-  const pass=document.getElementById('adminPass').value;
-  if(pass==='Giftaura@123'){
-    closeAdminLogin();
-    sessionStorage.setItem('giftaura_admin','1');
+  const password=window.prompt('🔐 Giftaurastudio Admin Password');
+  if(password===null)return;
+  if(password==='Giftaura@123'){
     document.getElementById('admin').classList.add('active');
     renderAdmin();
   }else{
-    document.getElementById('adminLoginError').textContent='Incorrect password.';
+    window.alert('❌ Wrong password');
   }
-}
-function adminLogout(){
-  sessionStorage.removeItem('giftaura_admin');
-  closeAdmin();
 }
 function closeAdmin(){document.getElementById('admin').classList.remove('active')}
 function renderAdmin(){document.getElementById('count').textContent=products.length+' products';document.getElementById('adminList').innerHTML=products.map(p=>`<div class="row"><img class="thumb" src="${p.img}"><div class="grow"><b>${esc(p.name)}</b><br><small>${esc(p.cat)} • ₹${Number(p.price).toLocaleString('en-IN')}</small></div><button class="edit" onclick="editProduct(${p.id})">Edit</button><button class="delete" onclick="deleteProduct(${p.id})">Delete</button></div>`).join('')}
@@ -119,39 +105,4 @@ document.getElementById('image').addEventListener('change',e=>{let f=e.target.fi
 document.getElementById('form').addEventListener('submit',e=>{e.preventDefault();let id=Number(document.getElementById('pid').value);let oldp=products.find(p=>p.id===id);let image=oldp?.img||'https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=800&q=80';let file=document.getElementById('image').files[0];const finish=(img)=>{let p={id:id||Date.now(),name:document.getElementById('name').value,cat:document.getElementById('cat').value,price:Number(document.getElementById('price').value),old:Number(document.getElementById('old').value)||0,desc:document.getElementById('desc').value,img};if(id)products=products.map(x=>x.id===id?p:x);else products.push(p);save();render();renderAdmin();closeModal()};if(file){let r=new FileReader();r.onload=()=>finish(r.result);r.readAsDataURL(file)}else finish(image)})
 document.getElementById('search').addEventListener('input',render);render();
 </script>
-
-<button class="cart-fab" onclick="openCart()">🛒 Cart <span id="cartCount" class="cart-count">0</span></button>
-<div id="cartOverlay" class="cart-overlay" onclick="if(event.target===this)closeCart()"><div class="cart-panel"><div class="cart-head"><h2>🛒 Your Cart</h2><button onclick="closeCart()">✕</button></div><div id="cartItems"></div><div id="cartTotal" style="font-size:19px;font-weight:900;padding:15px 0"></div><div class="checkout"><h3>Checkout</h3><input id="custName" placeholder="Full Name"><input id="custPhone" placeholder="Mobile Number" inputmode="tel"><textarea id="custAddress" rows="3" placeholder="Delivery Address"></textarea><button class="order-btn" onclick="placeOrder()">Order on WhatsApp 📲</button></div></div></div>
-
-<script>
-let cart=JSON.parse(localStorage.getItem('giftaura_cart')||'[]');
-function saveCart(){localStorage.setItem('giftaura_cart',JSON.stringify(cart));renderCart()}
-function addToCart(id){const p=products.find(x=>x.id===id);if(!p)return;const i=cart.find(x=>x.id===id);if(i)i.qty++;else cart.push({id,qty:1});saveCart();openCart()}
-function changeQty(id,d){const i=cart.find(x=>x.id===id);if(!i)return;i.qty+=d;if(i.qty<=0)cart=cart.filter(x=>x.id!==id);saveCart()}
-function removeFromCart(id){cart=cart.filter(x=>x.id!==id);saveCart()}
-function openCart(){document.getElementById('cartOverlay').classList.add('open');renderCart()}
-function closeCart(){document.getElementById('cartOverlay').classList.remove('open')}
-function renderCart(){const c=cart.reduce((s,x)=>s+x.qty,0);document.getElementById('cartCount').textContent=c;let total=0;const box=document.getElementById('cartItems');if(!cart.length){box.innerHTML='<div style="text-align:center;padding:35px;color:#777">Your cart is empty 🛍️</div>';document.getElementById('cartTotal').textContent='';return}box.innerHTML=cart.map(i=>{const p=products.find(x=>x.id===i.id);if(!p)return '';const line=Number(p.price)*i.qty;total+=line;return `<div class="cart-item"><img src="${p.img}" alt=""><div class="cart-item-info"><b>${esc(p.name)}</b><br>₹${Number(p.price).toLocaleString('en-IN')}<div class="qty"><button onclick="changeQty(${p.id},-1)">−</button><span>${i.qty}</span><button onclick="changeQty(${p.id},1)">+</button><button onclick="removeFromCart(${p.id})">Remove</button></div></div></div>`}).join('');document.getElementById('cartTotal').textContent='Total: ₹'+total.toLocaleString('en-IN')}
-function placeOrder(){if(!cart.length){alert('Your cart is empty.');return}const n=document.getElementById('custName').value.trim(),ph=document.getElementById('custPhone').value.trim(),a=document.getElementById('custAddress').value.trim();if(!n||!ph||!a){alert('Please fill your name, mobile number and delivery address.');return}let total=0,lines=[];cart.forEach(i=>{const p=products.find(x=>x.id===i.id);if(p){const l=Number(p.price)*i.qty;total+=l;lines.push(p.name+' x '+i.qty+' = ₹'+l)}});const msg='New Giftaurastudio Order\n\nName: '+n+'\nMobile: '+ph+'\nAddress: '+a+'\n\nProducts:\n'+lines.join('\n')+'\n\nTotal: ₹'+total;window.open('https://wa.me/918936930878?text='+encodeURIComponent(msg),'_blank')}
-document.addEventListener('DOMContentLoaded',renderCart);
-</script>
-
-<script>
-document.addEventListener('keydown',function(e){
-  if(e.key==='Enter' && document.getElementById('adminLogin').style.display==='flex') adminLogin();
-});
-</script>
-
-<script>
-/* Admin access: footer button or Ctrl+Shift+A */
-document.addEventListener('keydown',function(e){
-  if(e.ctrlKey && e.shiftKey && e.key.toLowerCase()==='a'){
-    e.preventDefault();
-    openAdmin();
-  }
-});
-</script>
-<div id="adminLogin" style="display:none;position:fixed;inset:0;background:#0008;z-index:5000;align-items:center;justify-content:center;padding:20px;box-sizing:border-box"><div style="background:#fff;width:min(390px,100%);border-radius:20px;padding:24px;box-sizing:border-box"><h2 style="margin-top:0">🔐 Admin Login</h2><p style="color:#666">Store owner access only</p><input id="adminPass" type="password" placeholder="Admin password" style="width:100%;box-sizing:border-box;padding:12px;border:1px solid #ddd;border-radius:10px;margin:8px 0"><button onclick="adminLogin()" style="width:100%;padding:12px;border:0;border-radius:10px;background:#111;color:#fff;font-weight:800">Login</button><button onclick="closeAdminLogin()" style="width:100%;padding:10px;border:0;background:transparent;color:#777;margin-top:6px">Cancel</button><div id="adminLoginError" style="color:#c00;margin-top:8px"></div></div></div>
-<script>const ADMIN_PASSWORD='Giftaura@123';function adminLogin(){const v=document.getElementById('adminPass').value;if(v===ADMIN_PASSWORD){document.getElementById('adminLogin').style.display='none';document.getElementById('admin').classList.add('active');renderAdmin()}else{document.getElementById('adminLoginError').textContent='Incorrect password. Try again.'}}function closeAdminLogin(){document.getElementById('adminLogin').style.display='none'}</script>
-</body></html
-</html>
+</body></html>
