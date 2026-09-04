@@ -141,15 +141,24 @@ document.addEventListener('keydown',function(e){
   if(e.key==='Enter' && document.getElementById('adminLogin').style.display==='flex') adminLogin();
 });
 </script>
+
+<script>
+/* Admin access: press Ctrl+Shift+A (desktop) or tap the footer copyright 7 times on mobile. */
+(function(){
+  let taps=0,timer;
+  document.addEventListener('keydown',e=>{
+    if(e.ctrlKey && e.shiftKey && e.key.toLowerCase()==='a'){ e.preventDefault(); if(typeof openAdmin==='function') openAdmin(); }
+  });
+  const foot=document.querySelector('.footer');
+  if(foot){
+    foot.addEventListener('click',()=>{
+      taps++; clearTimeout(timer); timer=setTimeout(()=>taps=0,1800);
+      if(taps>=7){taps=0;if(typeof openAdmin==='function')openAdmin();}
+    });
+  }
+})();
+</script>
+<div id="adminLogin" style="display:none;position:fixed;inset:0;background:#0008;z-index:5000;align-items:center;justify-content:center;padding:20px;box-sizing:border-box"><div style="background:#fff;width:min(390px,100%);border-radius:20px;padding:24px;box-sizing:border-box"><h2 style="margin-top:0">🔐 Admin Login</h2><p style="color:#666">Store owner access only</p><input id="adminPass" type="password" placeholder="Admin password" style="width:100%;box-sizing:border-box;padding:12px;border:1px solid #ddd;border-radius:10px;margin:8px 0"><button onclick="adminLogin()" style="width:100%;padding:12px;border:0;border-radius:10px;background:#111;color:#fff;font-weight:800">Login</button><button onclick="closeAdminLogin()" style="width:100%;padding:10px;border:0;background:transparent;color:#777;margin-top:6px">Cancel</button><div id="adminLoginError" style="color:#c00;margin-top:8px"></div></div></div>
+<script>const ADMIN_PASSWORD='Giftaura@123';function adminLogin(){const v=document.getElementById('adminPass').value;if(v===ADMIN_PASSWORD){document.getElementById('adminLogin').style.display='none';document.getElementById('admin').classList.add('active');renderAdmin()}else{document.getElementById('adminLoginError').textContent='Incorrect password. Try again.'}}function closeAdminLogin(){document.getElementById('adminLogin').style.display='none'}</script>
 </body></html
-<div id="adminLogin" style="display:none;position:fixed;inset:0;background:#0008;z-index:5000;align-items:center;justify-content:center;padding:20px;box-sizing:border-box">
-  <div style="background:#fff;width:min(390px,100%);border-radius:20px;padding:24px;box-sizing:border-box">
-    <h2 style="margin-top:0">🔐 Admin Login</h2>
-    <p style="color:#666">Only the store owner should use this panel.</p>
-    <input id="adminPass" type="password" placeholder="Admin password" style="width:100%;box-sizing:border-box;padding:12px;border:1px solid #ddd;border-radius:10px;margin:8px 0">
-    <button onclick="adminLogin()" style="width:100%;padding:12px;border:0;border-radius:10px;background:#111;color:#fff;font-weight:800">Login</button>
-    <button onclick="closeAdminLogin()" style="width:100%;padding:10px;border:0;background:transparent;color:#777;margin-top:6px">Cancel</button>
-    <div id="adminLoginError" style="color:#c00;margin-top:8px"></div>
-  </div>
-</div>
->
+</html>
