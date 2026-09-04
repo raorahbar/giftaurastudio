@@ -23,7 +23,7 @@ button,input,select,textarea{font:inherit}button{cursor:pointer}.top{background:
 @media(max-width:900px){.products{grid-template-columns:repeat(3,1fr)}.cats{grid-template-columns:repeat(5,1fr)}.features{grid-template-columns:repeat(2,1fr)}.contact{grid-template-columns:1fr 1fr}.hero h1{font-size:45px}}
 @media(max-width:600px){.top{font-size:10px}.header{flex-wrap:wrap}.brand{width:100%}.products{grid-template-columns:repeat(2,1fr)}.photo{height:150px}.cats{grid-template-columns:repeat(3,1fr)}.features{grid-template-columns:1fr 1fr}.hero{min-height:420px;padding:38px 7%}.hero h1{font-size:43px}.promo{display:block}.contact{grid-template-columns:1fr}.footer{display:block;line-height:2}.formgrid{grid-template-columns:1fr}.field.full{grid-column:auto}}
 </style>
-</head>
+<style>.cartbtn{margin-top:9px;width:100%;border:0;background:#111;color:#fff;padding:9px;border-radius:4px;font-weight:700}.cartfab{position:fixed;right:16px;bottom:16px;z-index:50;border:0;border-radius:30px;background:#111;color:#fff;padding:12px 16px;font-weight:800}.cartbox{display:none;position:fixed;inset:0;background:#0008;z-index:60;align-items:flex-end;justify-content:center}.cartbox.open{display:flex}.cartpanel{background:#fff;width:min(650px,100%);max-height:90vh;overflow:auto;border-radius:20px 20px 0 0;padding:20px}.cartrow{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid #ddd}.cartrow img{width:65px;height:65px;object-fit:cover}.checkout input,.checkout textarea{width:100%;box-sizing:border-box;padding:10px;margin:4px 0;border:1px solid #ddd;border-radius:7px}.waorder{width:100%;padding:12px;border:0;border-radius:8px;background:#25d366;color:white;font-weight:800}</style></head>
 <body>
 <div class="top"><span>✨ Premium Furniture, Office Essentials & More — All in One Place!</span><span>📍 Haridwar, Uttarakhand</span></div>
 <header class="header">
@@ -36,13 +36,13 @@ button,input,select,textarea{font:inherit}button{cursor:pointer}.top{background:
 <section class="features"><div class="feature">🚚 <b>FREE DELIVERY</b><small>On selected orders</small></div><div class="feature">♢ <b>PREMIUM QUALITY</b><small>Best quality products</small></div><div class="feature">↩ <b>EASY RETURNS</b><small>7 days return policy</small></div><div class="feature">♧ <b>CUSTOMER SUPPORT</b><small>WhatsApp support</small></div></section>
 
 <section class="section"><div class="head"><h2>Shop by Category</h2></div><div class="cats">
-<div class="circle">🛏️<br>Beds</div><div class="circle">🛋️<br>Sofas</div><div class="circle">🚪<br>Almirah</div><div class="circle">🪞<br>Dressing Tables</div><div class="circle">🛏️<br>Mattresses</div><div class="circle">🪑<br>Office Furniture</div><div class="circle">🔧<br>Spare Parts</div><div class="circle">🌿<br>Home Decor</div><div class="circle">•••<br>More</div>
+<div class="circle" onclick="setCategory('Beds')">🛏️<br>Beds</div><div class="circle" onclick="setCategory('Sofas')">🛋️<br>Sofas</div><div class="circle" onclick="setCategory('Almirah')">🚪<br>Almirah</div><div class="circle" onclick="setCategory('Dressing Tables')">🪞<br>Dressing Tables</div><div class="circle" onclick="setCategory('Mattresses')">🛏️<br>Mattresses</div><div class="circle" onclick="setCategory('Office Furniture')">🪑<br>Office Furniture</div><div class="circle" onclick="setCategory('Spare Parts')">🔧<br>Spare Parts</div><div class="circle" onclick="setCategory('Home Decor')">🌿<br>Home Decor</div><div class="circle" onclick="setCategory('Gifts')">•••<br>More</div>
 </div></section>
 
 <section class="section" id="products"><div class="head"><h2>Top Picks For You</h2></div><div class="products" id="grid"></div></section>
 <div class="promo"><div>Special Offer<h2>UPTO 30% OFF</h2>On Selected Products</div><a class="btn" href="#products">SHOP NOW</a></div>
 <section class="contact" id="contact"><div><h2>GIFTAURASTUDIO</h2><small>SHOP • DISCOVER • GIFT</small><p>Your one-stop destination for premium furniture, office essentials, home decor, spare parts and unique gifts.</p></div><div><h3>QUICK LINKS</h3><ul><li>Home</li><li>All Products</li><li>New Arrivals</li><li>Offers</li><li>Contact Us</li></ul></div><div><h3>CATEGORIES</h3><ul><li>Furniture</li><li>Office Furniture</li><li>Spare Parts</li><li>Home Decor</li><li>Gifts</li></ul></div><div><h3>CONTACT US</h3><p>📍 Haridwar, Uttarakhand</p><p>💬 8936930878</p><p>🕒 Mon–Sun | 10 AM – 8 PM</p></div></section>
-<div class="footer">© 2026 Giftaurastudio. All Rights Reserved. <button type="button" onclick="openAdmin()" style="border:0;background:transparent;color:#fff;text-decoration:underline;cursor:pointer;font-size:11px">🔐 Admin Login</button></div>
+<div class="footer">© 2026 Giftaurastudio. All Rights Reserved. <button onclick="openAdmin()" style="border:0;background:none;color:inherit;text-decoration:underline;font-size:11px;cursor:pointer">Admin</button></div>
 <a class="floating" href="https://wa.me/918936930878" target="_blank">☏</a>
 
 <div class="admin" id="admin">
@@ -76,25 +76,21 @@ const defaults=[
 let products=JSON.parse(localStorage.getItem(KEY)||'null')||defaults;
 function save(){localStorage.setItem(KEY,JSON.stringify(products))}
 function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+let activeCategory='';
+function setCategory(cat){activeCategory=cat;document.getElementById('search').value='';render();document.getElementById('products').scrollIntoView({behavior:'smooth'});}
 function render(){
- const q=(document.getElementById('search').value||'').toLowerCase();
- const list=products.filter(p=>(p.name+' '+p.cat+' '+(p.desc||'')).toLowerCase().includes(q));
- document.getElementById('grid').innerHTML=list.map(p=>{
-  const off=p.old?Math.max(0,Math.round((1-p.price/p.old)*100)):0;
-  return `<article class="card"><div class="photo" style="background-image:url('${p.img}')"></div><div class="info"><h3>${esc(p.name)}</h3><span class="price">₹${Number(p.price).toLocaleString('en-IN')}</span>${p.old?` <span class="old">₹${Number(p.old).toLocaleString('en-IN')}</span>`:''}${off?`<span class="off">${off}% OFF</span>`:''}<button class="wa" onclick="enquire(${p.id})">Enquire on WhatsApp</button></div></article>`
- }).join('')||'<p>No products found.</p>';
+ const q=(document.getElementById('search').value||'').toLowerCase().trim();
+ const list=products.filter(p=>{const hay=(p.name+' '+p.cat+' '+(p.desc||'')).toLowerCase(); return (!q||hay.includes(q)) && (!activeCategory||p.cat.toLowerCase()===activeCategory.toLowerCase());});
+ document.getElementById('grid').innerHTML=list.map(p=>{const off=p.old?Math.round((1-p.price/p.old)*100):0;return `<article class="card"><div class="photo" style="background-image:url('${p.img}')"></div><div class="info"><h3>${esc(p.name)}</h3><span class="price">₹${Number(p.price).toLocaleString('en-IN')}</span>${p.old?` <span class="old">₹${Number(p.old).toLocaleString('en-IN')}</span>`:''}${off>0?`<span class="off">${off}% OFF</span>`:''}<button class="cartbtn" onclick="addToCart(${p.id})">🛒 Add to Cart</button><button class="wa" onclick="enquire(${p.id})">Enquire on WhatsApp</button></div></article>`}).join('')||'<p>No products found.</p>';
 }
+
 function enquire(id){let p=products.find(x=>x.id===id);window.open('https://wa.me/918936930878?text='+encodeURIComponent('Hello Giftaurastudio, I am interested in: '+p.name),'_blank')}
 function openAdmin(){
-  const password=window.prompt('🔐 Giftaurastudio Admin Password');
-  if(password===null)return;
-  if(password==='Giftaura@123'){
-    document.getElementById('admin').classList.add('active');
-    renderAdmin();
-  }else{
-    window.alert('❌ Wrong password');
-  }
+ const password=prompt('🔐 Admin Password');
+ if(password==='Giftaura@123'){document.getElementById('admin').classList.add('active');renderAdmin()}
+ else if(password!==null){alert('❌ Wrong password');}
 }
+
 function closeAdmin(){document.getElementById('admin').classList.remove('active')}
 function renderAdmin(){document.getElementById('count').textContent=products.length+' products';document.getElementById('adminList').innerHTML=products.map(p=>`<div class="row"><img class="thumb" src="${p.img}"><div class="grow"><b>${esc(p.name)}</b><br><small>${esc(p.cat)} • ₹${Number(p.price).toLocaleString('en-IN')}</small></div><button class="edit" onclick="editProduct(${p.id})">Edit</button><button class="delete" onclick="deleteProduct(${p.id})">Delete</button></div>`).join('')}
 function newProduct(){document.getElementById('form').reset();document.getElementById('pid').value='';document.getElementById('preview').style.display='none';document.getElementById('modalTitle').textContent='Add Product';document.getElementById('modal').classList.add('active')}
@@ -105,4 +101,4 @@ document.getElementById('image').addEventListener('change',e=>{let f=e.target.fi
 document.getElementById('form').addEventListener('submit',e=>{e.preventDefault();let id=Number(document.getElementById('pid').value);let oldp=products.find(p=>p.id===id);let image=oldp?.img||'https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=800&q=80';let file=document.getElementById('image').files[0];const finish=(img)=>{let p={id:id||Date.now(),name:document.getElementById('name').value,cat:document.getElementById('cat').value,price:Number(document.getElementById('price').value),old:Number(document.getElementById('old').value)||0,desc:document.getElementById('desc').value,img};if(id)products=products.map(x=>x.id===id?p:x);else products.push(p);save();render();renderAdmin();closeModal()};if(file){let r=new FileReader();r.onload=()=>finish(r.result);r.readAsDataURL(file)}else finish(image)})
 document.getElementById('search').addEventListener('input',render);render();
 </script>
-</body></html>
+<button class="cartfab" onclick="openCart()">🛒 Cart <span id="cartCount">0</span></button><div class="cartbox" id="cartBox" onclick="if(event.target===this)closeCart()"><div class="cartpanel"><div style="display:flex;justify-content:space-between"><h2>🛒 Your Cart</h2><button onclick="closeCart()">✕</button></div><div id="cartItems"></div><h3 id="cartTotal"></h3><div class="checkout"><input id="custName" placeholder="Full Name"><input id="custPhone" placeholder="Mobile Number"><textarea id="custAddress" rows="3" placeholder="Delivery Address"></textarea><button class="waorder" onclick="placeOrder()">Order on WhatsApp 📲</button></div></div></div><script>let cart=JSON.parse(localStorage.getItem('giftaura_cart')||'[]');function saveCart(){localStorage.setItem('giftaura_cart',JSON.stringify(cart));renderCart()}function addToCart(id){let x=cart.find(i=>i.id===id);if(x)x.qty++;else cart.push({id,qty:1});saveCart();openCart()}function qty(id,d){let x=cart.find(i=>i.id===id);if(!x)return;x.qty+=d;if(x.qty<=0)cart=cart.filter(i=>i.id!==id);saveCart()}function openCart(){document.getElementById('cartBox').classList.add('open');renderCart()}function closeCart(){document.getElementById('cartBox').classList.remove('open')}function renderCart(){let total=0;let n=0;let html=cart.map(i=>{let p=products.find(x=>x.id===i.id);if(!p)return '';total+=p.price*i.qty;n+=i.qty;return `<div class="cartrow"><img src="${p.img}"><div><b>${esc(p.name)}</b><br>₹${Number(p.price).toLocaleString('en-IN')}<div><button onclick="qty(${p.id},-1)">−</button> ${i.qty} <button onclick="qty(${p.id},1)">+</button></div></div></div>`}).join('');document.getElementById('cartItems').innerHTML=html||'<p>Your cart is empty.</p>';document.getElementById('cartCount').textContent=n;document.getElementById('cartTotal').textContent=n?'Total: ₹'+total.toLocaleString('en-IN'):''}function placeOrder(){if(!cart.length)return alert('Cart is empty');let n=document.getElementById('custName').value.trim(),ph=document.getElementById('custPhone').value.trim(),a=document.getElementById('custAddress').value.trim();if(!n||!ph||!a)return alert('Please fill all checkout details');let total=0,lines=[];cart.forEach(i=>{let p=products.find(x=>x.id===i.id);if(p){total+=p.price*i.qty;lines.push(p.name+' x '+i.qty+' = ₹'+(p.price*i.qty))}});let msg='New Giftaurastudio Order\nName: '+n+'\nMobile: '+ph+'\nAddress: '+a+'\n\n'+lines.join('\n')+'\n\nTotal: ₹'+total;window.open('https://wa.me/918936930878?text='+encodeURIComponent(msg),'_blank')}renderCart();</script></body></html>
